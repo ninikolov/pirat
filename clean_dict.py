@@ -7,8 +7,8 @@ if __name__ == '__main__':
         with open('data/phonemeDB_clean.txt', 'a') as target:
             for line in source:
                 word = line.split("\t")[0].strip().lower()
-                tag = nltk.tag.pos_tag([word])[0][1]
-                if tag == 'NN' and d.check(word):
+                # tag = nltk.tag.pos_tag([word])[0][1]
+                if d.check(word):
                     target.write(line)
 
     source.close()
