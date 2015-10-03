@@ -10,7 +10,7 @@ var part2 = fs.readFileSync("part2.txt");
 var strings = fs.readFileSync('data/finalWords.txt').toString().split("\n");
 var tokens = [];
 var idx = [];
-var fixFlag = 1;
+var fixFlag = 0;
 // create new array with phoenetic parts
 for(i in strings) {
 	tokens[i] = strings[i].split(">");
@@ -22,8 +22,11 @@ console.log("Starting web server at " + serverUrl + ":" + port);
 http.createServer( function(req, res) {
 
 	console.log(req.url);
-	if(req.url === "/" || "/game.html"){
-                if(fixFlag && idx.length == 0){
+	if(req.url === "/" || req.url === "/game.html"){
+		if(req.url === "/"){
+			fixFlag = 1;
+		}
+          if(fixFlag){
                 	idx = Array.apply(null, {length: 19}).map(Number.call, Number);
 			fixFlag = 0;
                 }
@@ -32,6 +35,7 @@ http.createServer( function(req, res) {
 		}
 		idx = shuffle(idx)
 		randIdx = idx.pop()
+
 		console.log(idx)
 		var sol = tokens[randIdx][0].toLowerCase();
                 var phons = '{arr:['

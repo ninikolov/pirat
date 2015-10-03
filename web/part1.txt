@@ -231,7 +231,7 @@
                     <p> This is not the answer. Try again. </p></div>
                 <a class="btn btn-default" id="submit">Submit</a>
                 <a class="btn btn-default" id="reveal">Solution</a>
-                <a class="btn btn-default" href="game.html" id="new_word">New Word</a>
+                <a class="btn btn-default" href="/game.html" id="new_word">New Word</a>
             </form>
         </div>
     </div>
