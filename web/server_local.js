@@ -22,14 +22,14 @@ console.log("Starting web server at " + serverUrl + ":" + port);
 http.createServer( function(req, res) {
 
 	console.log(req.url);
-	if(req.url === "/index_test.html"){
+	if(req.url === "/" || "/game.html"){
                 if(fixFlag && idx.length == 0){
                 	idx = Array.apply(null, {length: 19}).map(Number.call, Number);
 			fixFlag = 0;
                 }
 		else if(idx.length == 0){
 			idx = Array.apply(null, {length: tokens.length}).map(Number.call, Number);
-		} 
+		}
 		idx = shuffle(idx)
 		randIdx = idx.pop()
 		console.log(idx)
