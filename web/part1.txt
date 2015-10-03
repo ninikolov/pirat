@@ -29,13 +29,63 @@
     <!-- Custom CSS -->
     <!--<link href="css/3-col-portfolio.css" rel="stylesheet"> -->
 
+    <script src="js/jquery.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script>
+        $(document).ready(function () {
+            $('#submit').click(function () {
+                var submission = $('#userInput2').val();
+//                solution = '';
+                if (submission == solution) {
+                    $('#message1').toggleClass('in');
+                    $("#userInput2").prop('readonly', true);
+                    $('#submit').attr("disabled", true);
+                } else {
+                    $('#alertmsg1').toggleClass('in');
+                    $("#alertmsg1").show().fadeOut(5000);
+                }
+            });
+        });
+    </script>
+    <style>
+        .modal.fade .modal-dialog {
+            transform: translate(0px, -25%);
+            transition: transform 0.3s ease-out 0s;
+        }
 
+        .modal.fade.in .modal-dialog {
+            transform: translate(0px, 0px);
+        }
+
+        .flyover {
+            left: 150%;
+            overflow: hidden;
+            position: fixed;
+            width: 50%;
+            opacity: 0.9;
+            z-index: 1050;
+            transition: left 0.6s ease-out 0s;
+        }
+
+        .flyover-centered {
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .flyover.in {
+            left: 50%;
+        }
+
+        .flyover-bottom {
+            bottom: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -94,16 +144,27 @@
 
         <!-- Pagination -->
         <div class="row text-center">
-            <div class="col-lg-12">
-                <form class="form-inline">
+        <div class="col-lg-12">
+            <form class="form-inline">
                 <div class="form-group">
                     <label for="userInput">Word: </label>
                     <input type="text" class="form-control" id="userInput2" placeholder="What's there?">
                 </div>
-                <a class="btn btn-default" href="index.html">Submit</a>
+                <div id="message1" class="jumbotron flyover flyover-centered">
+                    <h1>Success!</h1>
+
+                    <p>
+                        You got it right.
+                    </p>
+                    <!--<button class="btn btn-primary">Continue</button>-->
+                </div>
+                <div id="alertmsg1" class="alert alert-danger flyover flyover-bottom"><h1>Whoops!</h1>
+
+                    <p> This is not the answer. Try again. </p></div>
+                <a class="btn btn-default" id="submit">Submit</a>
                 <a class="btn btn-default" href="index.html">New Word</a>
-                </form>
-            </div>
+            </form>
+        </div>
         </div>
         <!-- /.row -->
 
