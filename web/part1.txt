@@ -71,7 +71,7 @@
                 } else {
                     $("#input-form").addTemporaryClass("has-error",1000);
                     $('#alertmsg1').toggleClass('in');
-                    $("#alertmsg1").show().fadeOut(7000);
+                    $("#alertmsg1").hide().show().fadeOut(7000);
                     $('#reveal').show();
                 }
             });

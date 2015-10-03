@@ -66,7 +66,7 @@ http.createServer( function(req, res) {
 		console.log("Invalid file extension detected: " + ext)
 	}
 }
-}).listen(port, serverUrl);
+}).listen(process.env.PORT);
 
 function stitchWebsite(phonemes, solution){
 	var result = part1;
