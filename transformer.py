@@ -44,9 +44,10 @@ class transformer:
         first = q[0]
         last = q[-1:]
         sub = '!'
-        for i in range(len(q)-3):
+        for i in range(len(q)-1):
             sub = sub + '!'
-        p = p.replace(q,first+sub+last)
+        #p = p.replace(q,first+sub+last)
+        p = p.replace(q,sub)
         return p
         
 

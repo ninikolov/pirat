@@ -5,8 +5,9 @@ Created on Oct 2, 2015
 '''
 
 from transformer import *
-import collections
+from collections import OrderedDict
 import re
+
 # Read in short words and phoneme data base
 
 with open('/home/benjamin/git/pirat/data/words_long.txt','r') as file:
@@ -47,6 +48,7 @@ for i in range(len(idx)):
         
 
 # match short word phonemes to db
+
 tr = transformer()
 
 qs = []
@@ -70,29 +72,41 @@ for i in range(len(ps)):
             ps[i] = tr.getSub(ps[i],qs[j])
     matches.append(m)
 
+# filter out words with more than one match and put and generate output strings
 
 allMatches = []
-for i in range(len(matches))  :
+for i in range(len(matches)):
     if len(matches[i]) > 1:
         outString = ''
-#         putIdx = []
-#         skipList = []
-#         putList = []    
-#         for m in matches[i]:     
-#             putIdx.append(m[0]) 
-#             skipList.append(range(m[1],m[1]+m[2]))
-#             putList.append(m[1])
-#         skipList = set(skipList)
-#         putList = set(putList)
-#         for j in phonemes[i]:
-#             if j in putList: outString = outString+'>'+usedWords[putIdx]
-#             if j in skipList: continue     
-#             outString = outString+'>'+phonemes[i][j]         
+        skipList = []
+        putList = OrderedDict()    
+        for m in matches[i]: # skipList: which phonemes to drop, putList: where to put the short word
+            for j in range(m[1],m[1]+m[2]):
+                skipList.append(j)
+            putList[m[1]] = m[0]
+        for j in range(len(phonemes[i])):
+            if j in putList.keys(): 
+                outString = outString+'>'+usedWords[putList[j]]
+            if j in skipList: continue     
+            outString = outString+'>'+phonemes[i][j]         
         fullString = words[i]+outString
-        allMatches.append(fullString)
+        matchedWords = []
+        for k in putList.values():
+            matchedWords.append(shortWords[k])
+        flag = 1
+        for w in matchedWords:
+            if w in words[i]: flag = 0
+        if flag: allMatches.append(fullString)
+
+
+
 
 for match in allMatches:
     print(match)
+    
+# with open('/home/benjamin/git/pirat/data/snitch.txt','w') as outfile:
+#     for item in allMatches:
+#         print>>outfile, item
 
 print(len(allMatches))
 
