@@ -4,9 +4,11 @@ Created on Oct 2, 2015
 @author: benjamin
 '''
 
-from transformer import *
+from phoneme.transformer import *
 from collections import OrderedDict
+import numpy
 import re
+from pylab import *
 
 # Read in short words and phoneme data base
 
@@ -57,25 +59,35 @@ for i in range(len(queries)):
 ps = []
 for i in range(len(phonemes)):
     ps.append(tr.transform(phonemes[i]))
-    
-    
-matches = []
-for i in range(len(ps)):
-    # identifier short word | index in long word | length of short word
-    m = []
-    for j in range(len(qs)):
-        if qs[j] in ps[i]:
-            ind = [mi.start() for mi in re.finditer(qs[j], ps[i])][0]
-            leng = len(qs[j])
-            m.append([j,ind,leng])
-            # substitute found match to prevent overlap matches
-            ps[i] = tr.getSub(ps[i],qs[j])
-    matches.append(m)
+ 
+newGen = 1 
+ 
+if newGen == 0:
+    matches = numpy.load('/home/benjamin/git/pirat/data/matches.npy')
+else:   
+    matches = []
+    for i in range(len(ps)):
+        # identifier short word | index in long word | length of short word
+        m = []
+        for j in range(len(qs)):
+            if qs[j] in ps[i]:
+                ind = [mi.start() for mi in re.finditer(qs[j], ps[i])][0]
+                leng = len(qs[j])
+                m.append([j,ind,leng])
+                # substitute found match to prevent overlap matches
+                ps[i] = tr.getSub(ps[i],qs[j])
+        matches.append(m)
+            
+    # save matches to file
+    numpy.save('/home/benjamin/git/pirat/data/matches.npy',matches)
+
 
 # filter out words with more than one match and put and generate output strings
 
 allMatches = []
+numMatches = []
 for i in range(len(matches)):
+    numMatches.append(len(matches[i]))
     if len(matches[i]) > 1:
         outString = ''
         skipList = []
@@ -92,22 +104,23 @@ for i in range(len(matches)):
         fullString = words[i]+outString
         matchedWords = []
         for k in putList.values():
-            matchedWords.append(shortWords[k])
-        flag = 1
+            matchedWords.append(usedWords[k])
+        exactMatches = 0
         for w in matchedWords:
-            if w in words[i]: flag = 0
-        if flag: allMatches.append(fullString)
+            if w in words[i]: exactMatches += 1
+        if exactMatches < 2 : allMatches.append(fullString)
 
 
-
-
+finalOutput = []
 for match in allMatches:
-    print(match)
+    if match.count('>') < 7:
+        finalOutput.append(match)
+        print(match)
     
 # with open('/home/benjamin/git/pirat/data/snitch.txt','w') as outfile:
 #     for item in allMatches:
 #         print>>outfile, item
 
-print(len(allMatches))
+print(len(finalOutput))
 
 
