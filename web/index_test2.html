@@ -133,7 +133,7 @@
     <script id="daTemplate" type="text/template">
       {{#arr}}
       <div class="col-md-12 portfolio-item text-center">
-    <img class="img-responsive" src="/img/{{pic}}.jpg" alt="">
+    <img class="img-responsive" src="img/{{pic}}.jpg" alt="">
     <h3>{{index}}</h3>
     </div>
     {{/arr}}
@@ -147,8 +147,8 @@ var contents = {
         {"pic":"aa", "index":"123"},
         {"pic":"bomb", "index":"21387"}
     ]
-}
-
+};
+var solution = "catabomb";
 var template = $('#daTemplate').html();
 var html = Mustache.to_html(template, contents);
 $('#templateArea').html(html)
