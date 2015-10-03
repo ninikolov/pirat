@@ -36,6 +36,18 @@ class transformer:
         for i in idx:
             outList.append(self.ids[i])
         return ''.join(outList)
+    
+    def getSub(self,p,q):
+        # when you find a match, replace the found sequence
+        # Insert unknown symbol ! to prevent matches within this match
+        # allow overlap by leaving first and last phoneme
+        first = q[0]
+        last = q[-1:]
+        sub = '!'
+        for i in range(len(q)-3):
+            sub = sub + '!'
+        p = p.replace(q,first+sub+last)
+        return p
         
 
 
