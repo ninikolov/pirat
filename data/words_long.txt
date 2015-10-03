@@ -36,7 +36,6 @@ pie
 pig
 pot
 rat
-son
 sun
 toe
 tub
@@ -434,7 +433,6 @@ recess
 reward
 route
 scene
-scent
 squirrel
 stranger
 suit
