@@ -7,7 +7,7 @@ var fs = require("fs");
 var part1 = fs.readFileSync("part1.txt");
 var part2 = fs.readFileSync("part2.txt");
 
-var strings = fs.readFileSync('../data/snitch.txt').toString().split("\n");
+var strings = fs.readFileSync('../data/goodWords.txt').toString().split("\n");
 var tokens = [];
 // create new array with phoenetic parts
 for(i in strings) {
@@ -21,9 +21,16 @@ http.createServer( function(req, res) {
 
 	console.log(req.url);
 	if(req.url === "/index_test.html"){
-		console.log("JUHU, unser if geht");
-		var phons = '{"entry":{"pic":"mic","index":"42"}}'
-		var sol = 'pirate'
+                var randIdx = Math.floor(Math.random() * (tokens.length));
+                var sol = tokens[randIdx][0].toLowerCase();
+                var phons = '{arr:['
+                for (i = 1; i < tokens[randIdx].length; i++){ 
+                        if(i!==1){
+                                phons += ',';
+                        }
+                        phons += '{"pic":"' + tokens[randIdx][i].toLowerCase() + '", "index":"' + i.toString() + '"}';
+                }
+                phons += ']}'
 		var website = stitchWebsite(phons, sol);
 		res.setHeader("Content-Length", website.length);
 		res.setHeader("Content-Type", ".html");
@@ -67,9 +74,9 @@ http.createServer( function(req, res) {
 
 function stitchWebsite(phonemes, solution){
 	var result = part1;
-	result += "var contents = '";
+	result += "var contents = ";
 	result+= phonemes;
-	result += "';";
+	result += ";";
 	result += "var solution = '";
 	result+= solution;
 	result += "';"

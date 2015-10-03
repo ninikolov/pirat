@@ -168,7 +168,7 @@
 
                         <p> This is not the answer. Try again. </p></div>
                     <a class="btn btn-default" id="submit">Submit</a>
-                    <a class="btn btn-default" href="index_test2.html">New Word</a>
+                    <a class="btn btn-default" href="index_test.html">New Word</a>
                 </form>
             </div>
         </div>
