@@ -56,6 +56,10 @@
                     $("#alertmsg1").show().fadeOut(5000);
                 }
             });
+            var t_width = $('#templateArea').width();
+            $('.portfolio-item').css({
+               "max-width":t_width/contents['arr'].length
+            });
         });
     </script>
     <style>
