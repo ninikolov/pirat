@@ -1,7 +1,9 @@
 import nltk
 import enchant
+import json
 
-if __name__ == '__main__':
+
+def clean_phoneme_dict():
     top_nouns = []
     with open('data/top_nouns.txt') as t_n:
         for line in t_n:
@@ -19,3 +21,24 @@ if __name__ == '__main__':
 
     source.close()
     target.close()
+
+
+def generate_json_from_snitch(file="data/snitch.txt"):
+    with open(file) as f:
+        root = {}
+        ind = 0
+        for line in f:
+            elements = line.lower().strip().split(">")
+            root[ind] = {"TRUE": elements[0]}
+            for i in range(1, len(elements)):
+                root[ind][i] = {"PIC": elements[i] + ".jpg"}
+            ind += 1
+    final = json.dumps(root, sort_keys=True, indent=4, separators=(',', ': '))
+    # print(final)
+    text_file = open("data/snitch.json", "w")
+    text_file.write(final)
+    text_file.close()
+
+
+if __name__ == '__main__':
+    generate_json_from_snitch()
