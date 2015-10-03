@@ -14,17 +14,17 @@
     <!-- Bootstrap Core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <style>
-    body {
-        padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    }
+        body {
+            padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        }
 
-    .portfolio-item {
-        margin-bottom: 25px;
-    }
+        .portfolio-item {
+            margin-bottom: 25px;
+        }
 
-    footer {
-        margin: 50px 0;
-    }
+        footer {
+            margin: 20px 0;
+        }
     </style>
     <!-- Custom CSS -->
     <!--<link href="css/3-col-portfolio.css" rel="stylesheet"> -->
@@ -32,97 +32,9 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-</head>
-
-<body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">PiRat</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">More</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
-    <!-- Page Content -->
-    <div class="container">
-
-        <!-- Page Header -->
-        <div class="row text-center">
-            <div class="col-lg-12">
-                <h1 class="page-header">PiRat
-                    <small>Guess the word!</small>
-                </h1>
-            </div>
-        </div>
-        <!-- /.row -->
-
-        <!-- Projects Row -->
-        <div id="templateArea" class="row">
-
-        </div>
-        <!-- /.row -->
-        <hr>
-
-        <!-- Pagination -->
-        <div class="row text-center">
-            <div class="col-lg-12">
-                <form class="form-inline">
-                <div class="form-group">
-                    <label for="userInput">Word: </label>
-                    <input type="text" class="form-control" id="userInput2" placeholder="What's there?">
-                </div>
-                <a class="btn btn-default" href="index.html">Submit</a>
-                <a class="btn btn-default" href="index.html">New Word</a>
-                </form>
-            </div>
-        </div>
-        <!-- /.row -->
-
-        <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; PiRat 2k15</p>
-                </div>
-            </div>
-            <!-- /.row -->
-        </footer>
-
-    </div>
-    <!-- /.container -->
-
-    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -130,22 +42,222 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.0/mustache.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/json2/20150503/json2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js"></script>
-    <script id="daTemplate" type="text/template">
-      {{#entry}}
-      <div class="col-md-12 portfolio-item text-center">
-    <img class="img-responsive" src="img/{{pic}}.jpg" alt="">
-    <h3>{{index}}</h3>
+    <script>
+        $(document).ready(function () {
+            $('#reveal').hide();
+            $('#submit').click(function () {
+                var submission = $('#userInput2').val();
+                if ($.trim(submission.toUpperCase()) == $.trim(solution.toUpperCase())) {
+                    $('#message1').toggleClass('in');
+                    $("#userInput2").prop('readonly', true);
+                    $('#submit').attr("disabled", true);
+                    $('#new_word').focus();
+                } else {
+                    $('#alertmsg1').toggleClass('in');
+                    $("#alertmsg1").show().fadeOut(7000);
+                    $('#reveal').show();
+                }
+            });
+            $('#reveal').click(function () {
+                $('#message1 h1').text("Don't stop believin'!");
+                $('#message1 p').text("The correct word was " + solution + ".");
+                $('#message1').toggleClass('in');
+                $("#userInput2").prop('readonly', true);
+                $('#submit').attr("disabled", true);
+                $('#reveal').attr("disabled", true);
+                $('#new_word').focus();
+            });
+            $('#templateArea').css({
+                "height": $(window).height() - 410
+            });
+            var t_width = $('#templateArea').width();
+            var t_height = $('#templateArea').height();
+            $('.portfolio-item').css({
+                "max-width": t_width / contents['arr'].length,
+                "height": t_height - 10
+            });
+            var p_width = $('.portfolio-item').width();
+            $('.portfolio-item h3').css({
+                "left": p_width / 2
+            });
+            $('#userInput2').keypress(function (e) {
+                var key = e.which;
+                if (key == 13)  // the enter key code
+                {
+                    $('#submit').click();
+                    return false;
+                }
+            });
+            $('#userInput2').focus();
+        });
+    </script>
+    <style>
+        .modal.fade .modal-dialog {
+            transform: translate(0px, -25%);
+            transition: transform 0.3s ease-out 0s;
+        }
+
+        .modal.fade.in .modal-dialog {
+            transform: translate(0px, 0px);
+        }
+
+        .flyover {
+            left: 150%;
+            overflow: hidden;
+            position: fixed;
+            width: 50%;
+            opacity: 0.9;
+            z-index: 1050;
+            transition: left 0.6s ease-out 0s;
+        }
+
+        .flyover-centered {
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .flyover.in {
+            left: 50%;
+        }
+
+        .flyover-bottom {
+            bottom: 10px;
+        }
+
+        .center-block {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">PiRat</a>
+            <!--<img src="css/piratLogo.png" alt="PiRat" style="height: 100px; width: 100px;"/>-->
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">More</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
     </div>
-    {{/entry}}
+    <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Page Header -->
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <img src="css/piratLogo.png" alt="PiRat"
+                 style="height: 100px; width: 100px;margin-top: 0px;margin-bottom: 0px;"/>
+
+            <h3 style="display: inline;">Guess the word!</h3>
+            <hr/>
+            <!--</h1>-->
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <!-- Projects Row -->
+    <div id="templateArea" class="row">
+
+    </div>
+    <!-- /.row -->
+    <hr>
+
+    <!-- Pagination -->
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="userInput">Word: </label>
+                    <input type="text" class="form-control" id="userInput2" placeholder="What is it?">
+                </div>
+                <div id="message1" class="jumbotron flyover flyover-centered">
+                    <h1>Success!</h1>
+
+                    <p>
+                        Nice one! You got it right.
+                    </p>
+                    <!--<button class="btn btn-primary">Continue</button>-->
+                </div>
+                <div id="alertmsg1" class="alert alert-danger flyover flyover-bottom"><h1>Whoops!</h1>
+
+                    <p> This is not the answer. Try again. </p></div>
+                <a class="btn btn-default" id="submit">Submit</a>
+                <a class="btn btn-default" id="reveal">Solution</a>
+                <a class="btn btn-default" href="index_test2.html" id="new_word">New Word</a>
+            </form>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; PiRat 2k15</p>
+            </div>
+        </div>
+        <!-- /.row -->
+    </footer>
+
+</div>
+<!-- /.container -->
+
+<!-- jQuery -->
+
+<script id="daTemplate" type="text/template">
+    {{#arr}}
+    <div class="col-md-12 portfolio-item text-center">
+        <img class="img-responsive center-block" src="img/{{pic}}.jpg" alt="">
+        <!--<h3 style="position: absolute; bottom: 5px;left: 50px;">{{index}}</h3>-->
+    </div>
+    {{/arr}}
 
 </script>
 
 <script type="text/javascript">
-var contents = '{"entry":{"pic":"eye","index":"42"}}';
-var array = JSON.parse(contents);
-var template = $('#daTemplate').html();
-var html = Mustache.to_html(template, array);
-$('#templateArea').html(html)
+    var contents = {
+        arr: [
+            {"pic": "cat", "index": "666"},
+            {"pic": "aa", "index": "123"},
+            {"pic": "bomb", "index": "21387"}
+        ]
+    };
+    var solution = "catabomb";
+    var template = $('#daTemplate').html();
+    var html = Mustache.to_html(template, contents);
+    $('#templateArea').html(html);
 </script>
 </body>
 

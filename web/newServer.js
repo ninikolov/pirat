@@ -9,6 +9,7 @@ var part2 = fs.readFileSync("part2.txt");
 
 var strings = fs.readFileSync('../data/goodWords.txt').toString().split("\n");
 var tokens = [];
+var idx = [];
 // create new array with phoenetic parts
 for(i in strings) {
 	tokens[i] = strings[i].split(">");
@@ -21,8 +22,13 @@ http.createServer( function(req, res) {
 
 	console.log(req.url);
 	if(req.url === "/index_test.html"){
-                var randIdx = Math.floor(Math.random() * (tokens.length));
-                var sol = tokens[randIdx][0].toLowerCase();
+                if(idx.length == 0){
+                	idx = Array.apply(null, {length: tokens.length-1}).map(Number.call, Number)
+                }
+		idx = shuffle(idx)
+		randIdx = idx.pop()
+		console.log(idx)
+		var sol = tokens[randIdx][0].toLowerCase();
                 var phons = '{arr:['
                 for (i = 1; i < tokens[randIdx].length; i++){ 
                         if(i!==1){
@@ -82,6 +88,12 @@ function stitchWebsite(phonemes, solution){
 	result += "';"
 	result += part2;
 	return result;
+}
+
+          
+function shuffle(o){
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
 }
 
 function getFile(localPath, res, mimeType) {
