@@ -14,8 +14,8 @@ if __name__ == '__main__':
                 word = line.split("\t")[0].strip().lower()
                 tag = nltk.tag.pos_tag([word])[0][1]
                 if d.check(word):
-                    if nltk.tag.pos_tag([word])[0][1] == 'NN' or word in top_nouns:
-                        target.write(line)
+                    # if nltk.tag.pos_tag([word])[0][1] == 'NN' or word in top_nouns:
+                    target.write(line)
 
     source.close()
     target.close()
