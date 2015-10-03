@@ -7,7 +7,7 @@ var fs = require("fs");
 var part1 = fs.readFileSync("part1.txt");
 var part2 = fs.readFileSync("part2.txt");
 
-var strings = fs.readFileSync('../data/goodWords.txt').toString().split("\n");
+var strings = fs.readFileSync('data/goodWords.txt').toString().split("\n");
 var tokens = [];
 var idx = [];
 // create new array with phoenetic parts
