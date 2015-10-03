@@ -56,9 +56,18 @@
                     $("#alertmsg1").show().fadeOut(5000);
                 }
             });
+            $('#templateArea').css({
+                "height":$(window).height() - 410
+            });
             var t_width = $('#templateArea').width();
+            var t_height = $('#templateArea').height();
             $('.portfolio-item').css({
-               "max-width":t_width/contents['arr'].length
+               "max-width":t_width/contents['arr'].length,
+                "height":t_height-10
+            });
+            var p_width = $('.portfolio-item').width();
+            $('.portfolio-item h3').css({
+               "left":p_width/2
             });
         });
     </script>
@@ -94,6 +103,11 @@
         .flyover-bottom {
             bottom: 10px;
         }
+        .center-block {
+            position: relative;
+              top: 50%;
+              transform: translateY(-50%);
+         }
     </style>
 
 </head>
@@ -198,8 +212,8 @@
     <script id="daTemplate" type="text/template">
       {{#arr}}
       <div class="col-md-12 portfolio-item text-center">
-    <img class="img-responsive" src="img/{{pic}}.jpg" alt="">
-    <h3>{{index}}</h3>
+    <img class="img-responsive center-block" src="img/{{pic}}.jpg" alt="">
+    <h3 style="position: absolute; bottom: 5px;left: 50px;">{{index}}</h3>
     </div>
     {{/arr}}
 
