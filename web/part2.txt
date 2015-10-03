@@ -1,6 +1,5 @@
-var array = JSON.parse(contents);
 var template = $('#daTemplate').html();
-var html = Mustache.to_html(template, array);
+var html = Mustache.to_html(template, contents);
 $('#templateArea').html(html)
 </script>
 </body>
