@@ -1,6 +1,6 @@
 var template = $('#daTemplate').html();
 var html = Mustache.to_html(template, contents);
-$('#templateArea').html(html)
+$('#templateArea').html(html);
 </script>
 </body>
 
