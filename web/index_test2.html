@@ -131,22 +131,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/json2/20150503/json2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js"></script>
     <script id="daTemplate" type="text/template">
-      {{#.}}
+      {{#arr}}
       <div class="col-md-12 portfolio-item text-center">
-    <img class="img-responsive" src="img/{{pic}}.jpg" alt="">
+    <img class="img-responsive" src="/img/{{pic}}.jpg" alt="">
     <h3>{{index}}</h3>
-  {{/.}}
-</div>
+    </div>
+    {{/arr}}
+
 </script>
 
 <script type="text/javascript">
-var fs = require(['fs']);
-var contents = fs.readFileSync('json/data.json', 'utf8');
-var array = JSON.parse(contents);
-alert("test");
-
+var contents = {
+    arr:[
+        {"pic":"cat", "index":"666"},
+        {"pic":"aa", "index":"123"},
+        {"pic":"bomb", "index":"21387"}
+    ]
+}
 var template = $('#daTemplate').html();
-var html = Mustache.to_html(template, array);
+var html = Mustache.to_html(template, contents);
 $('#templateArea').html(html)
 </script>
 </body>
