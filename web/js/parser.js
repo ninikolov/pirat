@@ -28,4 +28,3 @@ var colLength = 12/numCols;
 console.log(tokens);
 console.log(randWord);
 console.log(numCols);
-console.log(colLength);
