@@ -30,7 +30,7 @@ http.createServer( function(req, res) {
 		console.log(idx)
 		var sol = tokens[randIdx][0].toLowerCase();
                 var phons = '{arr:['
-                for (i = 1; i < tokens[randIdx].length; i++){ 
+                for (i = 1; i < tokens[randIdx].length; i++){
                         if(i!==1){
                                 phons += ',';
                         }
@@ -90,7 +90,7 @@ function stitchWebsite(phonemes, solution){
 	return result;
 }
 
-          
+
 function shuffle(o){
     for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     return o;

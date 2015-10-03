@@ -1,13 +1,10 @@
-var port = 8000;
-var serverUrl = "127.0.0.1";
-
 var http = require("http");
 var path = require("path");
 var fs = require("fs");
 var part1 = fs.readFileSync("part1.txt");
 var part2 = fs.readFileSync("part2.txt");
 
-var strings = fs.readFileSync('../data/goodWords.txt').toString().split("\n");
+var strings = fs.readFileSync('data/goodWords.txt').toString().split("\n");
 var tokens = [];
 var idx = [];
 // create new array with phoenetic parts
@@ -15,22 +12,17 @@ for(i in strings) {
 	tokens[i] = strings[i].split(">");
 }
 
-
-console.log("Starting web server at " + serverUrl + ":" + port);
-
 http.createServer( function(req, res) {
 
-	console.log(req.url);
 	if(req.url === "/index_test.html"){
                 if(idx.length == 0){
                 	idx = Array.apply(null, {length: tokens.length-1}).map(Number.call, Number)
                 }
 		idx = shuffle(idx)
 		randIdx = idx.pop()
-		console.log(idx)
 		var sol = tokens[randIdx][0].toLowerCase();
                 var phons = '{arr:['
-                for (i = 1; i < tokens[randIdx].length; i++){ 
+                for (i = 1; i < tokens[randIdx].length; i++){
                         if(i!==1){
                                 phons += ',';
                         }
@@ -63,10 +55,8 @@ http.createServer( function(req, res) {
 		localPath += filename;
 		fs.exists(localPath, function(exists) {
 			if(exists) {
-				console.log("Serving file: " + localPath);
 				getFile(localPath, res, ext);
 			} else {
-				console.log("File not found: " + localPath);
 				res.writeHead(404);
 				res.end();
 			}
@@ -90,7 +80,7 @@ function stitchWebsite(phonemes, solution){
 	return result;
 }
 
-          
+
 function shuffle(o){
     for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     return o;
