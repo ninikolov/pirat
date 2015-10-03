@@ -4,9 +4,10 @@ var fs = require("fs");
 var part1 = fs.readFileSync("part1.txt");
 var part2 = fs.readFileSync("part2.txt");
 
-var strings = fs.readFileSync('data/goodWords.txt').toString().split("\n");
+var strings = fs.readFileSync('data/finalWords.txt').toString().split("\n");
 var tokens = [];
 var idx = [];
+var fixFlag = 1;
 // create new array with phoenetic parts
 for(i in strings) {
 	tokens[i] = strings[i].split(">");
@@ -15,10 +16,14 @@ for(i in strings) {
 http.createServer( function(req, res) {
 
 	if(req.url === "/index_test.html"){
-                if(idx.length == 0){
-                	idx = Array.apply(null, {length: tokens.length-1}).map(Number.call, Number)
+                if(fixFlag && idx.length == 0){
+                	idx = Array.apply(null, {length: 19}).map(Number.call, Number);
+			fixFlag = 0;
                 }
-		idx = shuffle(idx)
+		else if(idx.length == 0){
+			idx = Array.apply(null, {length: tokens.length}).map(Number.call, Number);
+		}
+		idx = shuffle(idx);
 		randIdx = idx.pop()
 		var sol = tokens[randIdx][0].toLowerCase();
                 var phons = '{arr:['
@@ -63,7 +68,6 @@ http.createServer( function(req, res) {
 		});
 
 	} else {
-		console.log("Invalid file extension detected: " + ext)
 	}
 }
 }).listen(process.env.PORT);
